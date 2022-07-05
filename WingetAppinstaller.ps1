@@ -52,23 +52,24 @@ param (
   }
 }
 
-
-if (-Not (Test-Path "C:\Support\Store")) {
+if (-Not (Test-Path "C:\WingetInstall")) {
     Write-Host -ForegroundColor Green "Creating directory C:\Support\Store"
-    New-Item -ItemType Directory -Force -Path "C:\Support\Store"
+    New-Item -ItemType Directory -Force -Path "C:\WingetInstall"
 }
 
-Download-AppxPackage "https://apps.microsoft.com/store/detail/appinstallation/9NBLGGH4NNS1?hl=da-dk&gl=DK" "$PSScriptroot\"
+Download-AppxPackage "https://apps.microsoft.com/store/detail/appinstallation/9NBLGGH4NNS1?hl=da-dk&gl=DK" "C:\WingetInstall"
 
-Add-AppPackage -path $PSScriptRoot\Microsoft.UI.Xaml.2.7_7.2203.17001.0_x64__8wekyb3d8bbwe.appx
-Add-AppPackage -path $PSScriptRoot\Microsoft.VCLibs.140.00.UWPDesktop_14.0.30704.0_x64__8wekyb3d8bbwe.appx
-Add-AppxPackage -path $PSScriptRoot\Microsoft.DesktopAppInstaller_2021.1207.203.0_neutral_~_8wekyb3d8bbwe.appxbundle
+Add-AppPackage -path C:\WingetInstall\Microsoft.UI.Xaml.2.7_7.2203.17001.0_x64__8wekyb3d8bbwe.appx
+Add-AppPackage -path C:\WingetInstall\Microsoft.VCLibs.140.00.UWPDesktop_14.0.30704.0_x64__8wekyb3d8bbwe.appx
+Add-AppxPackage -path C:\WingetInstall\Microsoft.DesktopAppInstaller_2021.1207.203.0_neutral_~_8wekyb3d8bbwe.appxbundle
 
 #Install Folder
-Invoke-WebRequest -Uri https://github.com/thatian75642/Winget-Task-Sequence/raw/main/Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip -OutFile $PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip
-Expand-Archive -Path "$PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip" -DestinationPath "$PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe"
-Remove-Item -path "$PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip"
+Invoke-WebRequest -Uri "https://github.com/thatian75642/Winget-Task-Sequence/raw/main/Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip" -OutFile "C:\WingetInstall\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip"
+Expand-Archive -Path "Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip" -DestinationPath "C:\WingetInstall\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe" -Force
+Remove-Item -path "C:\WingetInstall\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip"
 
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/thatian75642/Winget-Task-Sequence/main/Winget%20Install%20App.ps1 -OutFile $PSScriptRoot\Winget-install.ps1
+#Script from github
+
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/thatian75642/Winget-Task-Sequence/main/Winget%20Install%20App.ps1 -OutFile C:\WingetInstall\Winget-install.ps1
 .\Winget-install.ps1 -AppIDs notepad++.notepad++
-.\winget-install.ps1 -AppIDs 7zip.7zip,notepad++.notepad++
+#.\winget-install.ps1 -AppIDs 7zip.7zip,notepad++.notepad++
