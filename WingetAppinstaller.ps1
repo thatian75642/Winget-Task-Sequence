@@ -72,4 +72,4 @@ Expand-Archive -Path "C:\WingetInstall\Microsoft.DesktopAppInstaller_1.17.11601.
 
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/thatian75642/Winget-Task-Sequence/main/Winget%20Install%20App.ps1 -OutFile C:\WingetInstall\Winget-install.ps1
 #.\Winget-install.ps1 -AppIDs notepad++.notepad++
-.\winget-install.ps1 -AppIDs 7zip.7zip,notepad++.notepad++
+.\WingetInstall\Winget-install.ps1 -AppIDs 7zip.7zip,notepad++.notepad++
