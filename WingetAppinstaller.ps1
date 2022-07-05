@@ -65,9 +65,8 @@ Add-AppxPackage -path C:\WingetInstall\Microsoft.DesktopAppInstaller_2021.1207.2
 
 #Install Folder
 Invoke-WebRequest -Uri "https://github.com/thatian75642/Winget-Task-Sequence/raw/main/Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip" -OutFile "C:\WingetInstall\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip"
-Expand-Archive -Path "Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip" -DestinationPath "C:\WingetInstall\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe" -Force
-start-sleep 15
-Remove-Item -path "C:\WingetInstall\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip"
+Expand-Archive -Path "C:\WingetInstall\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip" -DestinationPath "C:\WingetInstall\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe" -Force
+#Remove-Item -path "C:\WingetInstall\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip"
 
 #Script from github
 
