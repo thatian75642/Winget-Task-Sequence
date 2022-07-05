@@ -1,38 +1,3 @@
-<#
-.SYNOPSIS
-Install apps with Winget through Intune or SCCM.
-Can be used standalone.
-
-.DESCRIPTION
-Allow to run Winget in System Context to install your apps.
-https://github.com/Romanitho/Winget-Install
-
-.PARAMETER AppIDs
-Forward Winget App ID to install. For multiple apps, separate with ","
-
-.PARAMETER Uninstall
-To uninstall app. Works with AppIDs
-
-.PARAMETER LogPath
-Used to specify logpath. Default is same folder as Winget-Autoupdate project
-
-.PARAMETER WAUWhiteList
-Adds the app to the Winget-AutoUpdate White List. More info: https://github.com/Romanitho/Winget-AutoUpdate
-If '-Uninstall' is used, it removes the app from WAU White List.
-
-.EXAMPLE
-.\winget-install.ps1 -AppIDs 7zip.7zip
-
-.EXAMPLE
-.\winget-install.ps1 -AppIDs 7zip.7zip -Uninstall
-
-.EXAMPLE
-.\winget-install.ps1 -AppIDs 7zip.7zip -WAUWhiteList
-
-.EXAMPLE
-.\winget-install.ps1 -AppIDs 7zip.7zip,notepad++.notepad++ -LogPath "C:\temp\logs"
-#>
-
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $True, ParameterSetName = "AppIDs")] [String[]] $AppIDs,
@@ -99,28 +64,8 @@ function Write-Log ($LogMsg, $LogColor = "White") {
 #Get WinGet Location Function
 
 function Get-WingetCmd {
-$Script:winget = "$PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\winget.exe"   
+$Script:winget = "C:\WingetInstall\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\winget.exe"   
 }
-    <#
-    #Get WinGet Path (if admin context)
-    $Script:Winget = Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe
-
-    #Get WinGet Location in User context
-    $WingetCmd = Get-Command winget.exe -ErrorAction SilentlyContinue
-    if ($WingetCmd) {
-        $Script:Winget = $WingetCmd.Source
-    }
-    #Get Winget Location in System context (WinGet < 1.17)
-    elseif (Test-Path "$PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\AppInstallerCLI.exe") {
-        $Script:Winget = "$PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\AppInstallerCLI.exe"
-    }
-    #Get Winget Location in System context (WinGet > 1.17)
-    elseif (Test-Path "$PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\winget.exe") {
-        Winget = "$PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\winget.exe"
-    }
-    Write-Log "Using following Winget Cmd: $winget`n"
-#}
-#>
 #Function to configure prefered scope option as Machine
 function Add-ScopeMachine {
     #Get Settings path for system or current user
@@ -159,7 +104,7 @@ function Add-ScopeMachine {
 #Check if app is installed
 function Confirm-Install ($AppID) {
     #Get "Winget List AppID"
-    $InstalledApp = & "$PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\winget.exe" list --Id $AppID --accept-source-agreements | Out-String
+    $InstalledApp = & "C:\WingetInstall\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\winget.exe" list --Id $AppID --accept-source-agreements | Out-String
 
     #Return if AppID exists in the list
     if ($InstalledApp -match [regex]::Escape($AppID)) {
@@ -172,7 +117,7 @@ function Confirm-Install ($AppID) {
 #Check if App exists in Winget Repository
 function Confirm-Exist ($AppID) {
     #Check is app exists in the winget repository
-    $WingetApp = & "$PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\winget.exe" show --Id $AppID --accept-source-agreements | Out-String
+    $WingetApp = & "C:\WingetInstall\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe\winget.exe" show --Id $AppID --accept-source-agreements | Out-String
 
     #Return if AppID exists
     if ($WingetApp -match [regex]::Escape($AppID)) {
