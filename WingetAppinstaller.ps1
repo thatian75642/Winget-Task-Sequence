@@ -65,9 +65,9 @@ Add-AppPackage -path $PSScriptRoot\Microsoft.VCLibs.140.00.UWPDesktop_14.0.30704
 Add-AppxPackage -path $PSScriptRoot\Microsoft.DesktopAppInstaller_2021.1207.203.0_neutral_~_8wekyb3d8bbwe.appxbundle
 
 #Install Folder
-Invoke-WebRequest -Uri https://github.com/thatian75642/OSDCLOUD/raw/main/Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip -OutFile $PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip
+Invoke-WebRequest -Uri https://github.com/thatian75642/Winget-Task-Sequence/raw/main/Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip -OutFile $PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip
 Expand-Archive -Path "$PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip" -DestinationPath "$PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe"
 Remove-Item -path "$PSScriptRoot\Microsoft.DesktopAppInstaller_1.17.11601.0_x64__8wekyb3d8bbwe.zip"
 
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/thatian75642/OSDCLOUD/main/Winget%20test -OutFile $PSScriptRoot\Winget-install.ps1
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/thatian75642/Winget-Task-Sequence/main/Winget%20Install%20App.ps1 -OutFile $PSScriptRoot\Winget-install.ps1
 .\Winget-install.ps1 -AppIDs notepad++.notepad++
