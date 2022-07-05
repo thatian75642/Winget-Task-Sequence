@@ -336,3 +336,5 @@ foreach ($App_Full in $AppIDs) {
 
 Write-Log "###   END REQUEST   ###`n" "Magenta"
 Start-Sleep 3
+
+New-Item -ItemType Directory -Force -Path "C:\WingetInstall"
